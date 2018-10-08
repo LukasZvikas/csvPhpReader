@@ -20,18 +20,40 @@ class Main {
 
 class CsvReader {
 
+    public static function getColumnArray($line) {
+        $wordsPerLine = count($line);
+        $columnArray  = array();
+        $wordCount    = 1;
+        while ($wordCount <= $wordsPerLine) {
+            $item = "<th>" . "Column" . " " . $wordCount . "</th>";
+            array_push($columnArray, $item);
+            $wordCount++;
+        }
+        return $columnArray;
+    }
+
     public static function readCsv($fileName) {
 
         $f = fopen($fileName, "r");
         $rowCount = 1;
-        echo "<tr>";
         while (($line = fgetcsv($f)) !== false) {
-            echo "<tr>";
+
+            $columns = self::getColumnArray($line);
+
+            if ($rowCount == 1) {
+                echo "<tr>";
+                foreach ($columns as $column) {
+                    echo $column;
+                }
+                echo "</tr>";
+            } else
+                echo '<tr>';
+
             foreach ($line as $cell) {
                 echo "<td>" . $cell . "</td>";
                 $rowCount++;
             }
-            echo "</tr>";
+            echo "</tr>\n";
         }
         fclose($f);
     }
