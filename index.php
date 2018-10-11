@@ -7,17 +7,35 @@ class main  {
     }
 }
 
-class html
-{
+class records {
     public static function generateRecordArray($records) {
 
         $recordArray = array();
         foreach ($records as $record) {
-                array_push($recordArray, $record);
+            array_push($recordArray, $record);
         }
         return $recordArray;
     }
+}
 
+class html
+{
+    public static function templateGenerator($array)
+    {
+        $count = 0;
+
+        foreach ($array as $item) {
+            echo "<tr>";
+            foreach ($item as $i) {
+                if ($count == 0)
+                    echo "<th>" . $i . "</th>";
+                else
+                    echo "<td>" . $i . "</td>";
+            }
+            $count++;
+        }
+        echo "</tr>";
+    }
 }
 
 class csvFileReader {
