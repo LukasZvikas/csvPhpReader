@@ -28,26 +28,35 @@ class recordsGenerator {
 
 class html
 {
-    public static function templateGenerator($array)
+    public static function rowGenerator($array)
     {
+
         $count = 0;
 
         foreach ($array as $item) {
             printer::echoString("<tr>");
-            foreach ($item as $i) {
-                if ($count == 0) {
-                    $th = "<th>" . $i . "</th>";
-                    printer::echoString($th);
-                }
-                else {
-                    $td = "<td>" . $i . "</td>";
-                    printer::echoString($td);
-                }
-            }
-            $count++;
+            self::cellGenerator($item, $count);
             printer::echoString("</tr>");
+
+            $count++;
         }
 
+    }
+
+    public static function cellGenerator($item, $count) {
+
+        foreach ($item as $i) {
+
+            if ($count == 0) {
+                $th = "<th>" . $i . "</th>";
+                printer::echoString($th);
+
+            }
+            else {
+                $td = "<td>" . $i . "</td>";
+                printer::echoString($td);
+            }
+        }
     }
 
 
@@ -59,7 +68,7 @@ class html
                         <body>
                             <table class='table table-striped'>\n\n"
         );
-        self::templateGenerator(recordsGenerator::generateRecordArray($record));
+        self::rowGenerator(recordsGenerator::generateRecordArray($record));
         printer::echoString( "\n</table></body></html>");
     }
 }
