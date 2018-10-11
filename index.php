@@ -9,6 +9,12 @@ class main  {
     }
 }
 
+class printer {
+    public static function echoString($string) {
+        echo $string;
+    }
+}
+
 class recordsGenerator {
     public static function generateRecordArray($records) {
 
@@ -27,15 +33,19 @@ class html
         $count = 0;
 
         foreach ($array as $item) {
-            echo "<tr>";
+            printer::echoString("<tr>");
             foreach ($item as $i) {
-                if ($count == 0)
-                    echo "<th>" . $i . "</th>";
-                else
-                    echo "<td>" . $i . "</td>";
+                if ($count == 0) {
+                    $th = "<th>" . $i . "</th>";
+                    printer::echoString($th);
+                }
+                else {
+                    $td = "<td>" . $i . "</td>";
+                    printer::echoString($td);
+                }
             }
             $count++;
-            echo "</tr>";
+            printer::echoString("</tr>");
         }
 
     }
@@ -43,12 +53,13 @@ class html
 
     public static function bootstrapTemplate($record) {
 
-        echo "<html>
-                <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\">
-                <body>
-                    <table class='table table-striped'>\n\n";
-                    self::templateGenerator(recordsGenerator::generateRecordArray($record));
-        echo "\n</table></body></html>";
+        printer::echoString(
+            "<html>
+                        <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\">
+                        <body>
+                            <table class='table table-striped'>\n\n");
+                            self::templateGenerator(recordsGenerator::generateRecordArray($record));
+        printer::echoString( "\n</table></body></html>");
     }
 }
 
