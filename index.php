@@ -9,7 +9,7 @@ class main  {
     }
 }
 
-class records {
+class recordsGenerator {
     public static function generateRecordArray($records) {
 
         $recordArray = array();
@@ -68,6 +68,22 @@ class csvFileReader {
         }
         fclose($file);
         return $records;
+    }
+}
+class record {
+    public function __construct(Array $fieldNames = null, $values = null )
+    {
+        $record = array_combine($fieldNames, $values);
+        foreach ($record as $property => $value) {
+            $this->createProperty($property, $value);
+        }
+    }
+    public function returnArray() {
+        $array = (array) $this;
+        return $array;
+    }
+    public function createProperty($name, $value) {
+        $this->{$name} = $value;
     }
 }
 
