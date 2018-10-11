@@ -57,8 +57,9 @@ class html
             "<html>
                         <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\">
                         <body>
-                            <table class='table table-striped'>\n\n");
-                            self::templateGenerator(recordsGenerator::generateRecordArray($record));
+                            <table class='table table-striped'>\n\n"
+        );
+        self::templateGenerator(recordsGenerator::generateRecordArray($record));
         printer::echoString( "\n</table></body></html>");
     }
 }
