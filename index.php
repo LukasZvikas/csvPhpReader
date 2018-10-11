@@ -13,6 +13,16 @@ class printer {
     public static function echoString($string) {
         echo $string;
     }
+    public static function trTagGeneratorStart() {
+        echo "<tr>";
+    }
+    public static function trTagGeneratorEnd() {
+        echo "</tr>";
+    }
+
+    public static function tableTagGenerator($type, $item){
+        echo "<" . $type . ">" . $item . "</" . $type ." >";
+    }
 }
 
 class recordsGenerator {
@@ -30,38 +40,27 @@ class html
 {
     public static function rowGenerator($array)
     {
-
         $count = 0;
-
         foreach ($array as $item) {
-            printer::echoString("<tr>");
+            //I dont use tableTagGenerator here because it echoes the same color rows if I use it
+            printer::trTagGeneratorStart();
             self::cellGenerator($item, $count);
-            printer::echoString("</tr>");
-
+            printer::trTagGeneratorEnd();
             $count++;
         }
-
     }
-
     public static function cellGenerator($item, $count) {
 
         foreach ($item as $i) {
-
             if ($count == 0) {
-                $th = "<th>" . $i . "</th>";
-                printer::echoString($th);
-
+                printer::tableTagGenerator("th", $i);
             }
             else {
-                $td = "<td>" . $i . "</td>";
-                printer::echoString($td);
+                printer::tableTagGenerator("td", $i);
             }
         }
     }
-
-
     public static function bootstrapTemplate($record) {
-
         printer::echoString(
             "<html>
                         <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\">
