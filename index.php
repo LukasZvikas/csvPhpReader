@@ -4,6 +4,8 @@ main::start("csvFile.csv");
 class main  {
     static public function start($filename) {
         $records = csvFileReader::getRecords($filename);
+        html::bootstrapTemplate($records);
+
     }
 }
 
@@ -35,6 +37,17 @@ class html
             $count++;
         }
         echo "</tr>";
+    }
+
+
+    public static function bootstrapTemplate($record) {
+
+        echo "<html>
+                <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\">
+                <body>
+                    <table class='table table-striped'>\n\n";
+                    self::templateGenerator(records::generateRecordArray($record));
+        echo "\n</table></body></html>";
     }
 }
 
