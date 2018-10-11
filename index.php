@@ -1,6 +1,26 @@
 <?php
 
-class csvfileReader {
+main::start("csvFile.csv");
+class main  {
+    static public function start($filename) {
+        $records = csvFileReader::getRecords($filename);
+    }
+}
+
+class html
+{
+    public static function generateRecordArray($records) {
+
+        $recordArray = array();
+        foreach ($records as $record) {
+                array_push($recordArray, $record);
+        }
+        return $recordArray;
+    }
+
+}
+
+class csvFileReader {
     static public function getRecords($filename) {
         $file = fopen($filename,"r");
         $fieldNames = array();
@@ -24,7 +44,6 @@ class recordFactory {
     public static function create(Array $fieldNames = null, Array $values = null) {
         $record = new record($fieldNames, $values);
         return $record;
-
         }
 }
 
