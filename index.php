@@ -35,8 +35,9 @@ class html
                     echo "<td>" . $i . "</td>";
             }
             $count++;
+            echo "</tr>";
         }
-        echo "</tr>";
+
     }
 
 
@@ -46,7 +47,7 @@ class html
                 <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\">
                 <body>
                     <table class='table table-striped'>\n\n";
-                    self::templateGenerator(records::generateRecordArray($record));
+                    self::templateGenerator(recordsGenerator::generateRecordArray($record));
         echo "\n</table></body></html>";
     }
 }
