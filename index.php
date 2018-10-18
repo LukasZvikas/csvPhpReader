@@ -3,21 +3,12 @@ main::start("csvFile.csv");
 class main {
     static public function start($filename) {
         $records = csvFileReader::getRecords($filename);
-        html::bootstrapTemplate($records);
+        staticHtml::bootstrapTemplate($records);
     }
 }
 class printer {
     public static function echoString($string) {
         echo $string;
-    }
-    public static function trTagGeneratorStart() {
-        echo "<tr>";
-    }
-    public static function trTagGeneratorEnd() {
-        echo "</tr>";
-    }
-    public static function tableTagGenerator($type, $item) {
-        echo "<" . $type . ">" . $item . "</" . $type . " >";
     }
 }
 class recordsGenerator {
@@ -29,34 +20,55 @@ class recordsGenerator {
         return $recordArray;
     }
 }
-class html {
+class staticHtml
+{
+
+    public static function trTagGeneratorStart()
+    {
+        echo "<tr>";
+    }
+
+    public static function trTagGeneratorEnd()
+    {
+        echo "</tr>";
+    }
+
+    public static function tableTagGenerator($type, $item)
+    {
+        echo "<" . $type . ">" . $item . "</" . $type . " >";
+    }
+
+    public static function bootstrapTemplate($record) {
+        printer::echoString("<html>
+                        <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\">
+                        <body>
+                            <table class='table table-striped'>\n\n");
+        dynamicHtmlGenerator::rowGenerator(recordsGenerator::generateRecordArray($record));
+        printer::echoString("\n</table></body></html>");
+    }
+}
+
+class dynamicHtmlGenerator {
     public static function rowGenerator($array) {
         $count = 0;
         foreach ($array as $item) {
             //I dont use tableTagGenerator here because it echoes the same color rows if I use it
-            printer::trTagGeneratorStart();
+            staticHtml::trTagGeneratorStart();
             self::cellGenerator($item, $count);
-            printer::trTagGeneratorEnd();
+            staticHtml::trTagGeneratorEnd();
             $count++;
         }
     }
     public static function cellGenerator($item, $count) {
         foreach ($item as $i) {
             if ($count == 0) {
-                printer::tableTagGenerator("th", $i);
+                staticHtml::tableTagGenerator("th", $i);
             } else {
-                printer::tableTagGenerator("td", $i);
+                staticHtml::tableTagGenerator("td", $i);
             }
         }
-    }
-    public static function bootstrapTemplate($record) {
-        printer::echoString("<html>
-                        <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\">
-                        <body>
-                            <table class='table table-striped'>\n\n");
-        self::rowGenerator(recordsGenerator::generateRecordArray($record));
-        printer::echoString("\n</table></body></html>");
-    }
+}
+
 }
 class csvFileReader {
     static public function getRecords($filename) {
