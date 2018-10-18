@@ -25,26 +25,52 @@ class staticHtml
 
     public static function trTagGeneratorStart()
     {
-        echo "<tr>";
+        printer::echoString( "<tr>");
     }
 
     public static function trTagGeneratorEnd()
     {
-        echo "</tr>";
+        printer::echoString( "</tr>");
     }
 
     public static function tableTagGenerator($type, $item)
     {
-        echo "<" . $type . ">" . $item . "</" . $type . " >";
+        printer::echoString( "<" . $type . ">" . $item . "</" . $type . " >");
     }
 
+    public static function bootstrapLinkGenerator() {
+        printer::echoString( "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\">");
+    }
+    public static function htmlTagGeneratorStart(){
+        printer::echoString( "<html>");
+    }
+    public static function htmlTagGeneratorEnd(){
+        printer::echoString( "</html>");
+    }
+    public static function bodyTagGeneratorStart(){
+        printer::echoString( "<body>");
+    }
+    public static function bodyTagGeneratorEnd(){
+        printer::echoString( "</body>");
+    }
+    public static function tableTagGeneratorStart()
+    {
+        printer::echoString( "<table class='table table-striped'>\n\n");
+    }
+    public static function tableTagGeneratorEnd()
+    {
+        printer::echoString( "</table>");
+    }
     public static function bootstrapTemplate($record) {
-        printer::echoString("<html>
-                        <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\">
-                        <body>
-                            <table class='table table-striped'>\n\n");
+        self::htmlTagGeneratorStart();
+        self::bootstrapLinkGenerator();
+        self::bodyTagGeneratorStart();
+        self::tableTagGeneratorStart();
         dynamicHtmlGenerator::rowGenerator(recordsGenerator::generateRecordArray($record));
-        printer::echoString("\n</table></body></html>");
+        self::tableTagGeneratorEnd();
+        self::bodyTagGeneratorEnd();
+        self::htmlTagGeneratorEnd();
+
     }
 }
 
